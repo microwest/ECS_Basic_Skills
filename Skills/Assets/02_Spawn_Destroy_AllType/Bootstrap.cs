@@ -36,8 +36,8 @@ namespace _02Spawn_Destroy
             entityManager = World.Active.GetOrCreateManager<EntityManager>();
             m_EntityCommandBufferSystem = World.Active.GetOrCreateManager<EndSimulationEntityCommandBufferSystem>();
 
-            spawnBtn.onClick.AddListener(() => { spawnEntities(1000); });
-            destroyBtn.onClick.AddListener(() => { destroyEntity(1000); });
+            spawnBtn.onClick.AddListener(() => { spawnEntities(10000); });
+            destroyBtn.onClick.AddListener(() => { destroyEntity(10000); });
         }
 
 

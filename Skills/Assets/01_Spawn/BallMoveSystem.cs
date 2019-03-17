@@ -1,18 +1,19 @@
 ﻿using UnityEngine;
+using Unity.Collections;
 using Unity.Entities;
 using Unity.Transforms;
 using Unity.Mathematics;
-using System;
+using Unity.Burst;
 using Unity.Jobs;
 
 namespace _01Spawn
 {
     /// <summary>
-    /// 开一个子线程
+    /// 开一个或多个子线程
     /// </summary>
     public class BallMoveSystem : JobComponentSystem
     {
-
+        [BurstCompile]
         struct MoveJob : IJobProcessComponentData<Translation, BallMoveSpeed>
         {
             public float time;
@@ -23,9 +24,14 @@ namespace _01Spawn
         }
         protected override JobHandle OnUpdate(JobHandle inputDeps)
         {
-            var job = new MoveJob() { time = Time.timeSinceLevelLoad };
-            var handle = job.Schedule(this);
-            return handle;
+            var job = new MoveJob()
+            {
+                time = Time.timeSinceLevelLoad
+            };
+            return job.Schedule(this, inputDeps); //schedules parallel for jobs
+
+            //*****execute in a single job************
+            //return job.ScheduleSingle(this, inputDeps);
         }
     }
 }

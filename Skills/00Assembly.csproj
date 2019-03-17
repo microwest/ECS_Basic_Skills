@@ -65,10 +65,10 @@
     <Compile Include="Assets\01_Spawn\BallMoveSpeedProxy.cs" />
     <Compile Include="Assets\01_Spawn\BallMoveSystem.cs" />
     <Compile Include="Assets\01_Spawn\Bootstrap.cs" />
-    <Compile Include="Assets\02_Spawn_Destroy\Bootstrap.cs" />
-    <Compile Include="Assets\03Sys_Switcher\BallMoveSpeedProxy.cs" />
-    <Compile Include="Assets\03Sys_Switcher\BallMoveSystem.cs" />
-    <Compile Include="Assets\03Sys_Switcher\Bootstrap.cs" />
+    <Compile Include="Assets\02_Spawn_Destroy_AllType\Bootstrap.cs" />
+    <Compile Include="Assets\04_Sys_Switcher\BallMoveSpeedProxy.cs" />
+    <Compile Include="Assets\04_Sys_Switcher\BallMoveSystem.cs" />
+    <Compile Include="Assets\04_Sys_Switcher\Bootstrap.cs" />
     <Compile Include="Assets\FPSCamera.cs" />
     <Reference Include="Unity.Entities">
       <HintPath>F:/@@@Unity2019 Projects/@ECS&amp;Job_Study/@@ECS_Basic_Skills/Skills/Library/ScriptAssemblies/Unity.Entities.dll</HintPath>
@@ -81,6 +81,15 @@
     </Reference>
     <Reference Include="Unity.Entities.Hybrid">
       <HintPath>F:/@@@Unity2019 Projects/@ECS&amp;Job_Study/@@ECS_Basic_Skills/Skills/Library/ScriptAssemblies/Unity.Entities.Hybrid.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Jobs">
+      <HintPath>F:/@@@Unity2019 Projects/@ECS&amp;Job_Study/@@ECS_Basic_Skills/Skills/Library/ScriptAssemblies/Unity.Jobs.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Burst">
+      <HintPath>F:/@@@Unity2019 Projects/@ECS&amp;Job_Study/@@ECS_Basic_Skills/Skills/Library/ScriptAssemblies/Unity.Burst.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Collections">
+      <HintPath>F:/@@@Unity2019 Projects/@ECS&amp;Job_Study/@@ECS_Basic_Skills/Skills/Library/ScriptAssemblies/Unity.Collections.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>E:/Program Files/Unity 2019.1.0b5/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>

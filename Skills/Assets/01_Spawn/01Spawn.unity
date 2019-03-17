@@ -51,8 +51,8 @@ LightmapSettings:
     m_IndirectOutputScale: 1
     m_AlbedoBoost: 1
     m_EnvironmentLightingMode: 0
-    m_EnableBakedLightmaps: 1
-    m_EnableRealtimeLightmaps: 0
+    m_EnableBakedLightmaps: 0
+    m_EnableRealtimeLightmaps: 1
   m_LightmapEditorSettings:
     serializedVersion: 12
     m_Resolution: 2
@@ -568,7 +568,7 @@ MonoBehaviour:
   maxCount: 20000
   maxSpeed: 5
   Range: 100
-  Prefab: {fileID: 2898919534981519473, guid: 221a5ab9047527c46af8a2708c97becb, type: 3}
+  prefab: {fileID: 2898919534981519473, guid: 221a5ab9047527c46af8a2708c97becb, type: 3}
   spawnBtn: {fileID: 1932711867}
   info: {fileID: 316415406}
 --- !u!4 &673071100

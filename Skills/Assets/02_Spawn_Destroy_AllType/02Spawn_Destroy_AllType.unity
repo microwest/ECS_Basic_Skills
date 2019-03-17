@@ -700,7 +700,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42ea72b0a8e6fa045b559a0347809353, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxCount: 20000
+  maxCount: 150000
   maxSpeed: 5
   Range: 100
   Prefab: {fileID: 2898919534981519473, guid: 221a5ab9047527c46af8a2708c97becb, type: 3}
