@@ -65,7 +65,9 @@
     <Compile Include="Assets\01_Spawn\BallMoveSpeedProxy.cs" />
     <Compile Include="Assets\01_Spawn\BallMoveSystem.cs" />
     <Compile Include="Assets\01_Spawn\Bootstrap.cs" />
-    <Compile Include="Assets\02_Spawn_Destroy_AllType\Bootstrap.cs" />
+    <Compile Include="Assets\02_Destroy_AllEntities\Bootstrap.cs" />
+    <Compile Include="Assets\03_Destroy_MatchingEntities\BallDestroySystem.cs" />
+    <Compile Include="Assets\03_Destroy_MatchingEntities\Bootstrap.cs" />
     <Compile Include="Assets\04_Sys_Switcher\BallMoveSpeedProxy.cs" />
     <Compile Include="Assets\04_Sys_Switcher\BallMoveSystem.cs" />
     <Compile Include="Assets\04_Sys_Switcher\Bootstrap.cs" />

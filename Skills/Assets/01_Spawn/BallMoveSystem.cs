@@ -13,11 +13,11 @@ namespace _01Spawn
     /// </summary>
     public class BallMoveSystem : JobComponentSystem
     {
-        [BurstCompile]
+       // [BurstCompile]
         struct MoveJob : IJobProcessComponentData<Translation, BallMoveSpeed>
         {
             public float time;
-            public void Execute(ref Translation pos, ref BallMoveSpeed speed)
+            public void Execute( ref Translation pos, [ReadOnly] ref BallMoveSpeed speed)
             {
                 pos.Value.y = math.sin(time * speed.Value) * 5;
             }

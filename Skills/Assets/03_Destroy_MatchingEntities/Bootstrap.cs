@@ -1,15 +1,16 @@
 ﻿using Unity.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using Unity.Entities;
 using Unity.Transforms;
 using Unity.Mathematics;
+using Unity.Jobs;
 using _01Spawn;
 
 
 
-namespace _02Spawn_Destroy
+namespace _03Destroy_MatchingEntities
 {
     /// <summary>
     /// 启动程序类
@@ -32,12 +33,11 @@ namespace _02Spawn_Destroy
 
         private void Start()
         {
-
             entityManager = World.Active.GetOrCreateManager<EntityManager>();
-            m_EntityCommandBufferSystem = World.Active.GetOrCreateManager<EndSimulationEntityCommandBufferSystem>();
 
-            spawnBtn.onClick.AddListener(() => { spawnEntities(10000); });
-            destroyBtn.onClick.AddListener(() => { destroyEntity(10000); });
+
+            spawnBtn.onClick.AddListener(() => { spawnEntities(1000); });
+            destroyBtn.onClick.AddListener(() => { destroyEntity(1000); });
         }
 
 
@@ -93,29 +93,20 @@ namespace _02Spawn_Destroy
 
 
 
-        EndSimulationEntityCommandBufferSystem m_EntityCommandBufferSystem;
-        EntityCommandBuffer CommandBuffer;
+
         /// <summary>
         /// Destroy a certain number of Entities;删除count个实体
         /// </summary>
         /// <param name="count"></param>
         void destroyEntity(int count)
         {
-            if (ballCount < 1)
-                return;
-            CommandBuffer = m_EntityCommandBufferSystem.CreateCommandBuffer();
-            NativeArray<Entity> entities = entityManager.GetAllEntities();
-
-            foreach (Entity en in entities)
-            {
-                if (ballCount > 0 && count > 0)
-                {
-                    CommandBuffer.DestroyEntity(en);
-                    ballCount--;
-                    count--;
-                    info.text = "Entities:" + ballCount.ToString();
-                }
-            }
+            BallDestroySystem.Instance.deleteCount = count;
+            ballCount -= count;
+            info.text = "Entities:" + ballCount.ToString();
+            BallDestroySystem.Instance.Enabled = true;
         }
     }
+
+
+
 }
