@@ -5,11 +5,9 @@ using UnityEngine.UI;
 using Unity.Entities;
 using Unity.Transforms;
 using Unity.Mathematics;
-using _01Spawn;
 
 
-
-namespace _02Destroy_AllEntities
+namespace ECS_01Spawn
 {
     /// <summary>
     /// 启动程序类
@@ -20,10 +18,9 @@ namespace _02Destroy_AllEntities
         public float maxSpeed = 5;
         public float Range = 100;
 
-        public GameObject Prefab;
+        public GameObject prefab;
 
         public Button spawnBtn;
-        public Button destroyBtn;
         public Text info;
 
         EntityManager entityManager;
@@ -32,10 +29,10 @@ namespace _02Destroy_AllEntities
 
         private void Start()
         {
-            entityManager = World.Active.GetOrCreateManager<EntityManager>();            
+            entityManager = World.Active.GetOrCreateManager<EntityManager>();
+
 
             spawnBtn.onClick.AddListener(() => { spawnEntities(1000); });
-            destroyBtn.onClick.AddListener(() => { destroyEntity(1000); });
         }
 
 
@@ -47,7 +44,7 @@ namespace _02Destroy_AllEntities
         {
             Entity entity;
             Vector2 circle;
-            Entity enPrefab = GameObjectConversionUtility.ConvertGameObjectHierarchy(Prefab, World.Active);
+            Entity enPrefab = GameObjectConversionUtility.ConvertGameObjectHierarchy(prefab, World.Active);
             #region Record the count of spawned Entities 记录现有实体数量
             if (ballCount >= maxCount)
             {
@@ -86,35 +83,6 @@ namespace _02Destroy_AllEntities
 
             entityManager.DestroyEntity(enPrefab);
 
-        }
-
-
-                
-        EntityCommandBuffer CommandBuffer;
-        /// <summary>
-        /// Destroy a certain number of Entities;删除count个实体
-        /// </summary>
-        /// <param name="count"></param>
-        void destroyEntity(int count)
-        {
-            if (ballCount < 1)
-                return;
-            CommandBuffer = World.Active.GetOrCreateManager<EndSimulationEntityCommandBufferSystem>().CreateCommandBuffer();
-
-            //***************************************Destroy Entities Without Matching
-            #region Destroy Entities Without Matching.
-            NativeArray<Entity> entities = entityManager.GetAllEntities();
-            foreach (Entity en in entities)
-            {
-                if (ballCount > 0 && count > 0)
-                {
-                    CommandBuffer.DestroyEntity(en);
-                    ballCount--;
-                    count--;
-                    info.text = "Entities:" + ballCount.ToString();
-                }
-            }
-            #endregion
         }
     }
 }

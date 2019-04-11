@@ -1,16 +1,15 @@
 ﻿using Unity.Collections;
-using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Unity.Entities;
 using Unity.Transforms;
 using Unity.Mathematics;
-using Unity.Jobs;
-using _01Spawn;
+using ECS_01Spawn;
 
 
 
-namespace _03Destroy_MatchingEntities
+namespace ECS_02Destroy_AllEntities
 {
     /// <summary>
     /// 启动程序类
@@ -33,8 +32,7 @@ namespace _03Destroy_MatchingEntities
 
         private void Start()
         {
-            entityManager = World.Active.GetOrCreateManager<EntityManager>();
-
+            entityManager = World.Active.GetOrCreateManager<EntityManager>();            
 
             spawnBtn.onClick.AddListener(() => { spawnEntities(1000); });
             destroyBtn.onClick.AddListener(() => { destroyEntity(1000); });
@@ -91,22 +89,32 @@ namespace _03Destroy_MatchingEntities
         }
 
 
-
-
-
+                
+        EntityCommandBuffer CommandBuffer;
         /// <summary>
         /// Destroy a certain number of Entities;删除count个实体
         /// </summary>
         /// <param name="count"></param>
         void destroyEntity(int count)
         {
-            BallDestroySystem.Instance.deleteCount = count;
-            ballCount -= count;
-            info.text = "Entities:" + ballCount.ToString();
-            BallDestroySystem.Instance.Enabled = true;
+            if (ballCount < 1)
+                return;
+            CommandBuffer = World.Active.GetOrCreateManager<EndSimulationEntityCommandBufferSystem>().CreateCommandBuffer();
+
+            //***************************************Destroy Entities Without Matching
+            #region Destroy Entities Without Matching.
+            NativeArray<Entity> entities = entityManager.GetAllEntities();
+            foreach (Entity en in entities)
+            {
+                if (ballCount > 0 && count > 0)
+                {
+                    CommandBuffer.DestroyEntity(en);
+                    ballCount--;
+                    count--;
+                    info.text = "Entities:" + ballCount.ToString();
+                }
+            }
+            #endregion
         }
     }
-
-
-
 }

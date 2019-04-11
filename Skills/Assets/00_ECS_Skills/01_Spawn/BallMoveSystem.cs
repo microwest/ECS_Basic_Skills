@@ -6,7 +6,7 @@ using Unity.Mathematics;
 using Unity.Burst;
 using Unity.Jobs;
 
-namespace _01Spawn
+namespace ECS_01Spawn
 {
     /// <summary>
     /// 开一个或多个子线程

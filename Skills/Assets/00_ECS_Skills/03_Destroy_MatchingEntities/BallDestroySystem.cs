@@ -6,9 +6,9 @@ using Unity.Mathematics;
 using Unity.Burst;
 using Unity.Jobs;
 using System;
-using _01Spawn;
+using ECS_01Spawn;
 
-namespace _03Destroy_MatchingEntities
+namespace ECS_03Destroy_MatchingEntities
 {
     [UpdateAfter(typeof(BallMoveSystem))]
     public class BallDestroySystem : ComponentSystem
