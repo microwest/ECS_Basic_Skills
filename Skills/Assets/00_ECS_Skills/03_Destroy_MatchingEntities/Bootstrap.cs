@@ -33,7 +33,7 @@ namespace ECS_03Destroy_MatchingEntities
 
         private void Start()
         {
-            entityManager = World.Active.GetOrCreateManager<EntityManager>();
+            entityManager = World.Active.EntityManager;
 
 
             spawnBtn.onClick.AddListener(() => { spawnEntities(1000); });

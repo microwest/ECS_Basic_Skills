@@ -32,7 +32,7 @@ namespace ECS_02Destroy_AllEntities
 
         private void Start()
         {
-            entityManager = World.Active.GetOrCreateManager<EntityManager>();            
+            entityManager = World.Active.EntityManager;
 
             spawnBtn.onClick.AddListener(() => { spawnEntities(1000); });
             destroyBtn.onClick.AddListener(() => { destroyEntity(1000); });
@@ -99,7 +99,7 @@ namespace ECS_02Destroy_AllEntities
         {
             if (ballCount < 1)
                 return;
-            CommandBuffer = World.Active.GetOrCreateManager<EndSimulationEntityCommandBufferSystem>().CreateCommandBuffer();
+            CommandBuffer = World.Active.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>().CreateCommandBuffer();
 
             //***************************************Destroy Entities Without Matching
             #region Destroy Entities Without Matching.

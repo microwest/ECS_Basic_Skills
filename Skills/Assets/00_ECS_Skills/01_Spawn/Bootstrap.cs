@@ -29,7 +29,7 @@ namespace ECS_01Spawn
 
         private void Start()
         {
-            entityManager = World.Active.GetOrCreateManager<EntityManager>();
+            entityManager = World.Active.EntityManager;
 
 
             spawnBtn.onClick.AddListener(() => { spawnEntities(1000); });

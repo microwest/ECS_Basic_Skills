@@ -11,7 +11,7 @@ namespace Sys_Switcher
     public class BallMoveSystem : JobComponentSystem
     {
         public static BallMoveSystem Instance;
-        struct MoveJob : IJobProcessComponentData<Translation, BallMoveSpeed>
+        struct MoveJob : IJobForEach<Translation, BallMoveSpeed>
         {
             public float time;
             public void Execute(ref Translation pos, ref BallMoveSpeed speed)

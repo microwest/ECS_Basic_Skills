@@ -29,8 +29,8 @@ namespace Sys_Switcher
 
         void Start()
         {
-            entityManager = World.Active.GetOrCreateManager<EntityManager>();
-
+            entityManager = World.Active.EntityManager;
+            
             spawnEntities(5000);
 
 
