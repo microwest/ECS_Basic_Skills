@@ -13,7 +13,7 @@ namespace ECS_01Spawn
     /// </summary>
     public class BallMoveSystem : JobComponentSystem
     {
-       // [BurstCompile]
+        [BurstCompile]
         struct MoveJob : IJobForEach<Translation, BallMoveSpeed>
         {
             public float time;

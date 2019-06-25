@@ -31,10 +31,10 @@ namespace ECS_03Destroy_MatchingEntities
             }
             Entities.ForEach((Entity entity, ref Translation pos, ref BallMoveSpeed speed) =>
             {
-                if (deleteCount > 0)
+                if (deleteCount > 0 && pos.Value.y > 4)
                 {
                     PostUpdateCommands.DestroyEntity(entity);
-                    deleteCount--;                    
+                    deleteCount--;
                 }
             });
         }
