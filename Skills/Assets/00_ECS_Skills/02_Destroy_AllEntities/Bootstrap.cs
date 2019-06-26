@@ -26,18 +26,22 @@ namespace ECS_02Destroy_AllEntities
         public Button destroyBtn;
         public Text info;
 
-        EntityManager entityManager;
+        EntityManager EM;
         int ballCount = 0;
-
+        BallMoveSystem moveSystem;
 
         private void Start()
         {
-            entityManager = World.Active.EntityManager;
+            EM = World.Active.EntityManager;
+            moveSystem = World.Active.GetOrCreateSystem<BallMoveSystem>();
 
             spawnBtn.onClick.AddListener(() => { spawnEntities(1000); });
             destroyBtn.onClick.AddListener(() => { destroyEntity(1000); });
         }
-
+        private void FixedUpdate()
+        {
+            moveSystem.Update();
+        }
 
         /// <summary>
         /// Spawn a certain number of Entities；产生count个实体
@@ -51,7 +55,7 @@ namespace ECS_02Destroy_AllEntities
             #region Record the count of spawned Entities 记录现有实体数量
             if (ballCount >= maxCount)
             {
-                entityManager.DestroyEntity(enPrefab);
+                EM.DestroyEntity(enPrefab);
                 return;
             }
             else if (ballCount + count > maxCount)
@@ -67,7 +71,7 @@ namespace ECS_02Destroy_AllEntities
 
             for (int i = 0; i < count; i++)
             {
-                entity = entityManager.Instantiate(enPrefab);
+                entity = EM.Instantiate(enPrefab);
 
                 circle = UnityEngine.Random.insideUnitCircle * Range;
 
@@ -80,17 +84,16 @@ namespace ECS_02Destroy_AllEntities
                 {
                     Value = UnityEngine.Random.Range(1, maxSpeed)
                 };
-                entityManager.SetComponentData(entity, pos);
-                entityManager.SetComponentData(entity, speed);
+                EM.SetComponentData(entity, pos);
+                EM.SetComponentData(entity, speed);
             }
 
-            entityManager.DestroyEntity(enPrefab);
+            EM.DestroyEntity(enPrefab);
 
         }
 
 
                 
-        EntityCommandBuffer CommandBuffer;
         /// <summary>
         /// Destroy a certain number of Entities;删除count个实体
         /// </summary>
@@ -99,16 +102,15 @@ namespace ECS_02Destroy_AllEntities
         {
             if (ballCount < 1)
                 return;
-            CommandBuffer = World.Active.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>().CreateCommandBuffer();
 
             //***************************************Destroy Entities Without Matching
             #region Destroy Entities Without Matching.
-            NativeArray<Entity> entities = entityManager.GetAllEntities();
+            NativeArray<Entity> entities = EM.GetAllEntities();
             foreach (Entity en in entities)
             {
                 if (ballCount > 0 && count > 0)
                 {
-                    CommandBuffer.DestroyEntity(en);
+                    EM.DestroyEntity(en);
                     ballCount--;
                     count--;
                     info.text = "Entities:" + ballCount.ToString();

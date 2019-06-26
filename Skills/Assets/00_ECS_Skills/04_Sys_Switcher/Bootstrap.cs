@@ -26,16 +26,25 @@ namespace Sys_Switcher
         EntityManager entityManager;
         int ballCount = 0;
         bool sysEnable = true;
+        BallMoveSystem moveSystem;
 
         void Start()
         {
             entityManager = World.Active.EntityManager;
-            
+            moveSystem = World.Active.GetOrCreateSystem<BallMoveSystem>();
+
+
             spawnEntities(5000);
 
 
             toggleBtn.onClick.AddListener(() => { toggleSystem(); });
         }
+        private void FixedUpdate()
+        {
+            if (sysEnable)
+                moveSystem.Update();
+        }
+
 
 
         /// <summary>
@@ -92,7 +101,6 @@ namespace Sys_Switcher
         void toggleSystem()
         {
             sysEnable = !sysEnable;
-            BallMoveSystem.Instance.Enabled = !BallMoveSystem.Instance.Enabled;
 
             if (sysEnable)
                 info.text = "Running";

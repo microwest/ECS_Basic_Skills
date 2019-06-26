@@ -27,19 +27,31 @@ namespace ECS_03Destroy_MatchingEntities
         public Button destroyBtn;
         public Text info;
 
-        EntityManager entityManager;
+        EntityManager EM;
         int ballCount = 0;
 
+        BallMoveSystem moveSystem;
+        BallDestroySystem destroySystem;
 
         private void Start()
         {
-            entityManager = World.Active.EntityManager;
-
+            EM = World.Active.EntityManager;
+            moveSystem = World.Active.GetOrCreateSystem<BallMoveSystem>();
+            destroySystem = World.Active.GetOrCreateSystem<BallDestroySystem>();
 
             spawnBtn.onClick.AddListener(() => { spawnEntities(1000); });
-            destroyBtn.onClick.AddListener(() => { destroyEntity(1000); });
+            destroyBtn.onClick.AddListener(() => { destroySystem.isDeleting = true; });
         }
+        private void FixedUpdate()
+        {
+            moveSystem.Update();
+            if (destroySystem.isDeleting)
+            {
+                destroySystem.Update();
+                BallRemained();
+            }
 
+        }
 
         /// <summary>
         /// Spawn a certain number of Entities；产生count个实体
@@ -53,7 +65,7 @@ namespace ECS_03Destroy_MatchingEntities
             #region Record the count of spawned Entities 记录现有实体数量
             if (ballCount >= maxCount)
             {
-                entityManager.DestroyEntity(enPrefab);
+                EM.DestroyEntity(enPrefab);
                 return;
             }
             else if (ballCount + count > maxCount)
@@ -69,7 +81,7 @@ namespace ECS_03Destroy_MatchingEntities
 
             for (int i = 0; i < count; i++)
             {
-                entity = entityManager.Instantiate(enPrefab);
+                entity = EM.Instantiate(enPrefab);
 
                 circle = UnityEngine.Random.insideUnitCircle * Range;
 
@@ -82,28 +94,23 @@ namespace ECS_03Destroy_MatchingEntities
                 {
                     Value = UnityEngine.Random.Range(1, maxSpeed)
                 };
-                entityManager.SetComponentData(entity, pos);
-                entityManager.SetComponentData(entity, speed);
+                EM.SetComponentData(entity, pos);
+                EM.SetComponentData(entity, speed);
             }
 
-            entityManager.DestroyEntity(enPrefab);
+            EM.DestroyEntity(enPrefab);
 
         }
 
-
-
-
-
         /// <summary>
-        /// Destroy a certain number of Entities;删除count个实体
+        /// 计算剩下的小球数量
         /// </summary>
-        /// <param name="count"></param>
-        void destroyEntity(int count)
+        void BallRemained()
         {
-            BallDestroySystem.Instance.deleteCount = count;
-            ballCount -= count;
+            EntityQuery EQ = EM.CreateEntityQuery(typeof(BallMoveSpeed));
+            ballCount = EQ.CalculateLength();
             info.text = "Entities:" + ballCount.ToString();
-            BallDestroySystem.Instance.Enabled = true;
+            EQ.Dispose();
         }
     }
 

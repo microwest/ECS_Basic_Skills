@@ -25,16 +25,20 @@ namespace ECS_01Spawn
 
         EntityManager entityManager;
         int ballCount = 0;
-
+        BallMoveSystem moveSystem;
 
         private void Start()
         {
             entityManager = World.Active.EntityManager;
-
+            moveSystem = World.Active.GetOrCreateSystem<BallMoveSystem>();
 
             spawnBtn.onClick.AddListener(() => { spawnEntities(1000); });
         }
-
+        private void FixedUpdate()
+        {
+            moveSystem.Update();
+        }
+        
 
         /// <summary>
         /// Spawn a certain number of Entities；产生count个实体

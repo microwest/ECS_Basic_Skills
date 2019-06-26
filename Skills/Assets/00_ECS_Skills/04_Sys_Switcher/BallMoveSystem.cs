@@ -8,9 +8,9 @@ using Unity.Jobs;
 
 namespace Sys_Switcher
 {
+    [DisableAutoCreation]
     public class BallMoveSystem : JobComponentSystem
     {
-        public static BallMoveSystem Instance;
         struct MoveJob : IJobForEach<Translation, BallMoveSpeed>
         {
             public float time;
@@ -25,13 +25,6 @@ namespace Sys_Switcher
             var job = new MoveJob() { time = Time.timeSinceLevelLoad };
             var handle = job.Schedule(this);
             return handle;
-        }
-
-        protected override void OnStartRunning()
-        {
-            if (Instance == null)
-                Instance = this;
-            base.OnStartRunning();
         }
     }
 }

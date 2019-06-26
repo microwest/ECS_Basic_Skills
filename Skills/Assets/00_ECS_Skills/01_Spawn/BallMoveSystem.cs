@@ -8,6 +8,7 @@ using Unity.Jobs;
 
 namespace ECS_01Spawn
 {
+    [DisableAutoCreation]
     /// <summary>
     /// 开一个或多个子线程
     /// </summary>

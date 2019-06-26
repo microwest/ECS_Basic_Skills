@@ -10,33 +10,24 @@ using ECS_01Spawn;
 
 namespace ECS_03Destroy_MatchingEntities
 {
-    [UpdateAfter(typeof(BallMoveSystem))]
+    [DisableAutoCreation]
     public class BallDestroySystem : ComponentSystem
     {
-        public static BallDestroySystem Instance;
-        public int deleteCount = 0;
+        public bool isDeleting = false;
 
-        protected override void OnStartRunning()
-        {
-            if (Instance == null)
-                Instance = this;
-        }
-
+        /// <summary>
+        /// 条件性删除：删除Y坐标>4的小球
+        /// </summary>
         protected override void OnUpdate()
         {
-            if (deleteCount < 1)
-            {
-                Enabled = false;
-                return;
-            }
             Entities.ForEach((Entity entity, ref Translation pos, ref BallMoveSpeed speed) =>
             {
-                if (deleteCount > 0 && pos.Value.y > 4)
+                if (isDeleting && pos.Value.y > 4)
                 {
                     PostUpdateCommands.DestroyEntity(entity);
-                    deleteCount--;
                 }
             });
+            isDeleting = false;
         }
     }
 }
